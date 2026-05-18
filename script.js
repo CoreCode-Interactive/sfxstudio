@@ -208,7 +208,7 @@ function playNextCue() {
     currentCueIndex = (currentCueIndex + 1) % cues.length;
     
     fireCue(cues[currentCueIndex]);
-    renderCues(); // Forces the active class styling to move visually
+    renderCues();
 }
 
 function stopEverything() {
@@ -230,7 +230,7 @@ function renderCues() {
     cues.forEach((cue, index) => {
         const div = document.createElement('div');
         
-        // If this cue matches the active index, add selected state immediately
+        // If this cue matches our tracked active index, visually select it
         if (index === currentCueIndex) {
             div.className = "cue-box selected";
         } else {
@@ -238,20 +238,22 @@ function renderCues() {
         }
 
         div.onclick = () => {
-            currentCueIndex = index; // Keep index synced on manual click
+            currentCueIndex = index; // Sync our tracker index to the clicked item
             fireCue(cue);
-            selectCue(div);
+            renderCues();            // Re-render immediately to update visual borders
         };
 
         div.innerHTML = `
             <div class="cue-info">
-                <strong>${cue.type.toUpperCase()}</strong>: ${cue.fileName}
+                <span class="cue-type">${cue.type.toUpperCase()}</span>
+                <span class="cue-name">${cue.fileName}</span>
             </div>
             <button class="btn-delete" onclick="removeCue(event, ${cue.id})">Delete</button>
         `;
         container.appendChild(div);
     });
 }
+
 function removeCue(e, id) {
     e.stopPropagation();
     cues = cues.filter(c => c.id !== id);
@@ -294,6 +296,7 @@ function loadShow(event) {
     reader.onload = function(e) {
         try {
             cues = JSON.parse(e.target.result);
+            currentCueIndex = -1; // Reset tracker back to safety before rendering
             renderCues();
         } catch (err) {
             alert("Invalid show file structural data.");
