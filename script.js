@@ -153,6 +153,7 @@ async function addCue() {
 
 // --- 4. THE FIRE ENGINE ---
 function fireCue(cue) {
+    
     if (cue.type === 'audio') {
         if (currentAudio) currentAudio.pause();
         currentAudio = new Audio(cue.path);
@@ -227,7 +228,10 @@ function renderCues() {
     cues.forEach(cue => {
         const div = document.createElement('div');
         div.className = "cue-box";
-        div.onclick = () => fireCue(cue);
+        div.onclick = () => {
+            fireCue(cue);
+            selectCue(div);
+        };
         div.innerHTML = `
             <div class="cue-info">
                 <strong>${cue.type.toUpperCase()}</strong>: ${cue.fileName}
@@ -344,4 +348,16 @@ async function fetchSupabaseFiles() {
         console.error('Error fetching from Supabase:', error);
         selectDropdown.innerHTML = '<option value="">Error loading files</option>';
     }
+}
+
+function selectCue(element) {
+    // 1. Find every element with the class 'cue-box' and loop through them
+    const allCues = document.querySelectorAll('.cue-box');
+    allCues.forEach(cue => {
+        // Remove the selected class from all of them, resetting them to regular
+        cue.classList.remove('selected');
+    });
+
+    // 2. Add the 'selected' class ONLY to the one that was just clicked
+    element.classList.add('selected');
 }
