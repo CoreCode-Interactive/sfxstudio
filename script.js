@@ -374,3 +374,5 @@ function selectCue(element) {
     // 2. Add the 'selected' class ONLY to the one that was just clicked
     element.classList.add('selected');
 }
+
+fetchSupabaseFiles();
