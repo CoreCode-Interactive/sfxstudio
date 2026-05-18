@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta http-equiv="Content-Security-Policy" content="connect-src 'self' data: blob: https://*.supabase.co https://cdn.jsdelivr.net;">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SFXStudio</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="icon" type="image/png" href="img/Favicon.png">
+</head>
+
+<body>
+
+<!-- Supabase Connection Config Modal -->
+<div id="configModal" class="auth-overlay" style="display: none;">
+    <div class="auth-box">
+        <h2>Connect Your Storage</h2>
+        <p class="config-instructions">
+            To use SFXStudio, connect your personal Supabase project. Files upload directly to your own account.
+        </p>
+        <form id="configForm" onsubmit="saveSupabaseConfig(event)">
+            <div class="input-group">
+                <label>Supabase Project URL:</label>
+                <input type="url" id="dbUrl" placeholder="https://your-id.supabase.co" required>
+            </div>
+            <div class="input-group">
+                <label>Supabase Anon/Public Key:</label>
+                <input type="text" id="dbKey" placeholder="eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9..." required>
+            </div>
+            <div class="input-group">
+                <label>Storage Bucket Name:</label>
+                <input type="text" id="dbBucket" value="cue-media" required>
+            </div>
+            <button type="submit" class="btn-connect">Connect Backend</button>
+        </form>
+        <div class="setup-help">
+            <strong>Quick Setup:</strong> Create a free account at Supabase.com, start a project, create a <em>Public</em> storage bucket, and grab your API credentials from Project Settings > API.
+        </div>
+    </div>
+</div>
+
+<header>
+    <div class="brand" style="display: flex; align-items: center; gap: 0;">
+        <strong style="display: inline !important; color: #fefffe; margin: 0; padding: 0;">SF</strong>
+        <strong style="display: inline !important; color: #7c61f6; margin: 0; padding: 0;">X</strong>
+        <strong style="display: inline !important; color: #fefffe; margin: 0; padding: 0;">Studio</strong>
+        <span id="windowStatus" class="status-offline" style="margin-left: 10px; margin-right: 6px;">Projector Offline</span>
+    </div>
+    <div class="header-actions">
+        <button onclick="saveShow()" class="btn-save">Save Show</button>
+        <button onclick="document.getElementById('importFile').click()" class="btn-load">Load Show</button>
+        <input type="file" id="importFile" style="display:none" accept=".json" onchange="loadShow(event)">
+        
+        <button onclick="launchProjector()" class="btn-launch">Launch Projector</button>
+        <button class="btn-stop" title="Press Esc to stop" onclick="stopEverything()">EMERGENCY STOP</button>
+        <button onclick="disconnectBackend()" class="btn-disconnect">Disconnect DB</button>
+    </div>
+</header>
+
+<main>
+<div class="creator-bar">
+    <div class="input-group">
+        <label>Type:</label>
+        <select id="typeInput" onchange="updateFileFilters()">
+            <option value="image">Image</option>
+            <option value="video">Video</option>
+            <option value="audio">Audio</option>
+        </select>
+    </div>
+    
+    <div class="input-group">
+        <label>Source:</label>
+        <select id="sourceInput" class="input-group" onchange="toggleSourceInput()">
+            <option value="computer">My Computer</option>
+            <option value="supabase">Supabase Storage</option>
+        </select>
+    </div>
+    
+    <!-- Local File Picker (hidden by default) -->
+    <div class="input-group" id="localFileGroup" style="display: none;>
+        <label>File:</label>
+        <input type="file" id="filePicker" accept="image/*">
+    </div>
+
+    <!-- Supabase File Picker (visible by default) -->
+    <div class="input-group" id="supabaseFileGroup">
+        <label>Choose Remote File:</label>
+        <select id="supabaseFilePicker" class="input-group">
+            <option value="">Loading files...</option>
+        </select>
+    </div>
+    
+    <button onclick="addCue()" class="btn-add">+ Add Cue</button>
+</div>
+
+    <div id="cueList" class="cue-container">
+        <!-- Cues will be injected here -->
+    </div>
+</main>
+
+<!-- Supabase JavaScript SDK CDN -->
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="script.js?v=1.0.1"></script>
+</body>
+</html>
