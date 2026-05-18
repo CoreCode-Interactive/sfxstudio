@@ -58,23 +58,41 @@
 </header>
 
 <main>
-    <div class="creator-bar">
-        <div class="input-group">
-            <label>Type:</label>
-            <select id="typeInput" onchange="updateFileFilters()">
-                <option value="image">Image</option>
-                <option value="video">Video</option>
-                <option value="audio">Audio</option>
-            </select>
-        </div>
-        
-        <div class="input-group">
-            <label>File:</label>
-            <input type="file" id="filePicker" accept="image/*">
-        </div>
-        
-        <button onclick="addCue()" class="btn-add">+ Add Cue</button>
+<div class="creator-bar">
+    <div class="input-group">
+        <label>Type:</label>
+        <select id="typeInput" onchange="updateFileFilters()">
+            <option value="image">Image</option>
+            <option value="video">Video</option>
+            <option value="audio">Audio</option>
+        </select>
     </div>
+    
+    <!-- NEW: Source Selection -->
+    <div class="input-group">
+        <label>Source:</label>
+        <select id="sourceInput" onchange="toggleSourceInput()">
+            <option value="computer">My Computer</option>
+            <option value="supabase">Supabase Storage</option>
+        </select>
+    </div>
+    
+    <!-- Local File Picker (Visible by default) -->
+    <div class="input-group" id="localFileGroup">
+        <label>File:</label>
+        <input type="file" id="filePicker" accept="image/*">
+    </div>
+
+    <!-- NEW: Supabase File Picker (Hidden by default) -->
+    <div class="input-group" id="supabaseFileGroup" style="display: none;">
+        <label>Choose Remote File:</label>
+        <select id="supabaseFilePicker">
+            <option value="">Loading files...</option>
+        </select>
+    </div>
+    
+    <button onclick="addCue()" class="btn-add">+ Add Cue</button>
+</div>
 
     <div id="cueList" class="cue-container">
         <!-- Cues will be injected here -->
