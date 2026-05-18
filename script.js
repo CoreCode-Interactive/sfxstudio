@@ -206,7 +206,9 @@ function fireCue(cue) {
 function playNextCue() {
     if (cues.length === 0) return;
     currentCueIndex = (currentCueIndex + 1) % cues.length;
+    
     fireCue(cues[currentCueIndex]);
+    renderCues(); // Forces the active class styling to move visually
 }
 
 function stopEverything() {
@@ -225,13 +227,22 @@ function renderCues() {
     if (!container) return;
     container.innerHTML = "";
 
-    cues.forEach(cue => {
+    cues.forEach((cue, index) => {
         const div = document.createElement('div');
-        div.className = "cue-box";
+        
+        // If this cue matches the active index, add selected state immediately
+        if (index === currentCueIndex) {
+            div.className = "cue-box selected";
+        } else {
+            div.className = "cue-box";
+        }
+
         div.onclick = () => {
+            currentCueIndex = index; // Keep index synced on manual click
             fireCue(cue);
             selectCue(div);
         };
+
         div.innerHTML = `
             <div class="cue-info">
                 <strong>${cue.type.toUpperCase()}</strong>: ${cue.fileName}
@@ -241,7 +252,6 @@ function renderCues() {
         container.appendChild(div);
     });
 }
-
 function removeCue(e, id) {
     e.stopPropagation();
     cues = cues.filter(c => c.id !== id);
