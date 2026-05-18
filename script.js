@@ -15,15 +15,24 @@ function initBackend() {
     const configModal = document.getElementById('configModal');
 
     if (savedUrl && savedKey) {
-        // Initialize the Supabase SDK using the user's specific credentials
         supabaseClient = supabase.createClient(savedUrl, savedKey);
         currentBucket = savedBucket || "cue-media";
         
         if (configModal) configModal.style.display = 'none';
         console.log("Personal Supabase instance connected.");
+
+        // CRITICAL FIX: Fetch the files as soon as we know we are connected safely
+        fetchSupabaseFiles();
     } else {
         if (configModal) configModal.style.display = 'flex';
     }
+}
+
+// Production-safe initialization check
+if (document.readyState === 'loading') {
+    window.addEventListener('DOMContentLoaded', initBackend);
+} else {
+    initBackend();
 }
 
 // Automatically check backend status on document load
@@ -321,14 +330,19 @@ function toggleSourceInput() {
     }
 }
 
-// 2. Fetch the list of files from your Supabase storage bucket
 async function fetchSupabaseFiles() {
     const selectDropdown = document.getElementById('supabaseFilePicker');
+    if (!selectDropdown) return;
+    
     selectDropdown.innerHTML = '<option value="">Loading files...</option>';
 
     try {
-        // Replace 'vfxtest' with your actual bucket name variable if dynamic
-        const bucketName = document.getElementById('dbBucket').value || 'vfxtest'; 
+        const bucketName = currentBucket; 
+        
+        if (!supabaseClient) {
+            selectDropdown.innerHTML = '<option value="">Database not connected</option>';
+            return;
+        }
         
         const { data, error } = await supabaseClient
             .storage
@@ -345,10 +359,8 @@ async function fetchSupabaseFiles() {
             return;
         }
 
-        // Populate the dropdown with files found in the bucket
         selectDropdown.innerHTML = '<option value="">-- Select a File --</option>';
         data.forEach(file => {
-            // Ignore standard folder placeholders if any exist
             if (file.name !== '.emptyFolderPlaceholder') {
                 const option = document.createElement('option');
                 option.value = file.name;
