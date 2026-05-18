@@ -1,105 +1,152 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta http-equiv="Content-Security-Policy" content="connect-src 'self' data: blob: https://*.supabase.co https://cdn.jsdelivr.net;">
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>SFXStudio</title>
-    <link rel="stylesheet" href="style.css">
-    <link rel="icon" type="image/png" href="img/Favicon.png">
-</head>
+    <title>Home — SFXStudio</title>
+    <style>
+        /* Base Styles */
+        body, html {
+            margin: 0;
+            padding: 0;
+            background-color: #000000;
+            color: #ffffff;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            height: 100%;
+            overflow-x: hidden;
+        }
 
+        /* Navigation Bar */
+        nav {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            padding: 1.5rem 0;
+            display: flex;
+            justify-content: center;
+            gap: 2.5rem;
+            background: rgba(0, 0, 0, 0.8);
+            backdrop-filter: blur(10px);
+            z-index: 100;
+            border-bottom: 1px solid #111;
+        }
+
+        nav a {
+            color: #888;
+            text-decoration: none;
+            font-size: 0.8rem;
+            text-transform: uppercase;
+            letter-spacing: 0.15em;
+            transition: color 0.3s ease;
+        }
+
+        nav a:hover, nav a.active {
+            color: #3498db;
+        }
+
+        /* Main Split Layout */
+        main {
+            display: flex;
+            height: 100vh;
+            align-items: center;
+        }
+
+        /* Left Half: Image */
+        .hero-image {
+            flex: 1;
+            height: 100%;
+            background-image: url('your-image.jpg'); /* Replace with your image */
+            background-size: cover;
+            background-position: center;
+            border-right: 1px solid #222;
+            filter: grayscale(20%); /* Optional: keeps it moody/minimal */
+        }
+
+        /* Right Half: Content */
+        .hero-content {
+            flex: 1;
+            padding: 0 10%;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+
+        .hero-content h1 {
+            font-size: 3.5rem;
+            margin: 0 0 1rem 0;
+            font-weight: 800;
+            letter-spacing: -0.02em;
+        }
+
+        .hero-content p {
+            color: #aaa;
+            font-size: 1.2rem;
+            line-height: 1.6;
+            margin-bottom: 2.5rem;
+            max-width: 450px;
+        }
+
+        /* Blue Accent Button */
+        .cta-button {
+            display: inline-block;
+            width: max-content;
+            padding: 1rem 2rem;
+            background-color: transparent;
+            color: #3498db;
+            border: 2px solid #3498db;
+            text-decoration: none;
+            font-weight: 600;
+            letter-spacing: 0.05em;
+            transition: all 0.3s ease;
+            border-radius: 4px;
+        }
+
+        .cta-button:hover {
+            background-color: #3498db;
+            color: #ffffff;
+            box-shadow: 0 0 20px rgba(52, 152, 219, 0.4);
+        }
+
+        /* Mobile Responsiveness */
+        @media (max-width: 900px) {
+            main {
+                flex-direction: column;
+                height: auto;
+                padding-top: 80px;
+            }
+            .hero-image {
+                width: 100%;
+                height: 40vh;
+                border-right: none;
+                border-bottom: 1px solid #222;
+            }
+            .hero-content {
+                padding: 4rem 2rem;
+                text-align: center;
+                align-items: center;
+            }
+            .hero-content h1 { font-size: 2.5rem; }
+        }
+    </style>
+</head>
 <body>
 
-<!-- Supabase Connection Config Modal -->
-<div id="configModal" class="auth-overlay" style="display: none;">
-    <div class="auth-box">
-        <h2>Connect Your Storage</h2>
-        <p class="config-instructions">
-            To use SFXStudio, connect your personal Supabase project. Files upload directly to your own account.
-        </p>
-        <form id="configForm" onsubmit="saveSupabaseConfig(event)">
-            <div class="input-group">
-                <label>Supabase Project URL:</label>
-                <input type="url" id="dbUrl" placeholder="https://your-id.supabase.co" required>
-            </div>
-            <div class="input-group">
-                <label>Supabase Anon/Public Key:</label>
-                <input type="text" id="dbKey" placeholder="eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9..." required>
-            </div>
-            <div class="input-group">
-                <label>Storage Bucket Name:</label>
-                <input type="text" id="dbBucket" value="cue-media" required>
-            </div>
-            <button type="submit" class="btn-connect">Connect Backend</button>
-        </form>
-        <div class="setup-help">
-            <strong>Quick Setup:</strong> Create a free account at Supabase.com, start a project, create a <em>Public</em> storage bucket, and grab your API credentials from Project Settings > API.
+    <nav>
+        <a href="/" class="active">home</a>
+        <a href="/dashboard">dashboard</a>
+        <a href="/docs">docs</a>
+    </nav>
+
+    <main>
+        <!-- Replace the background-image in CSS or the src here -->
+        <div class="hero-image" style="background-image: url('https://images.unsplash.com/photo-1614850523296-d8c1af93d400?q=80&w=2070&auto=format&fit=crop');"></div>
+
+        <div class="hero-content">
+            <h1>Project Title.</h1>
+            <p>A lightweight web-based image and video projection, as well as audio, cue software. All you need is a free supabase account, and this site will allow you to upload media to your backend, fetch media from the backend, create a list of cues, and fire them on a separate window, all for free. Indtended for use on a computer with a seconadry monitor hooked up and extended displays.</p>
+            <a href="/dashboard" class="cta-button">TAKE ME TO DASHBOARD</a>
         </div>
-    </div>
-</div>
+    </main>
 
-<header>
-    <div class="brand" style="display: flex; align-items: center; gap: 0;">
-        <strong style="display: inline !important; color: #fefffe; margin: 0; padding: 0;">SF</strong>
-        <strong style="display: inline !important; color: #7c61f6; margin: 0; padding: 0;">X</strong>
-        <strong style="display: inline !important; color: #fefffe; margin: 0; padding: 0;">Studio</strong>
-        <span id="windowStatus" class="status-offline" style="margin-left: 10px; margin-right: 6px;">Projector Offline</span>
-    </div>
-    <div class="header-actions">
-        <button onclick="saveShow()" class="btn-save">Save Show</button>
-        <button onclick="document.getElementById('importFile').click()" class="btn-load">Load Show</button>
-        <input type="file" id="importFile" style="display:none" accept=".json" onchange="loadShow(event)">
-        
-        <button onclick="launchProjector()" class="btn-launch">Launch Projector</button>
-        <button class="btn-stop" title="Press Esc to stop" onclick="stopEverything()">EMERGENCY STOP</button>
-        <button onclick="disconnectBackend()" class="btn-disconnect">Disconnect DB</button>
-    </div>
-</header>
-
-<main>
-<div class="creator-bar">
-    <div class="input-group">
-        <label>Type:</label>
-        <select id="typeInput" onchange="updateFileFilters()">
-            <option value="image">Image</option>
-            <option value="video">Video</option>
-            <option value="audio">Audio</option>
-        </select>
-    </div>
-    
-    <div class="input-group">
-        <label>Source:</label>
-        <select id="sourceInput" class="input-group" onchange="toggleSourceInput()">
-            <option value="supabase">Supabase Storage</option>
-            <option value="computer">My Computer</option>
-        </select>
-    </div>
-    
-    <!-- Local File Picker (hidden by default) -->
-    <div class="input-group" id="localFileGroup" style="display: none;">
-        <label>File:</label>
-        <input type="file" id="filePicker" accept="image/*">
-    </div>
-
-    <!-- Supabase File Picker (visible by default) -->
-    <div class="input-group" id="supabaseFileGroup">
-        <label>Choose Remote File:</label>
-        <select id="supabaseFilePicker" class="input-group">
-            <option value="">Loading files...</option>
-        </select>
-    </div>
-    
-    <button onclick="addCue()" class="btn-add">+ Add Cue</button>
-</div>
-
-    <div id="cueList" class="cue-container">
-        <!-- Cues will be injected here -->
-    </div>
-</main>
-
-<!-- Supabase JavaScript SDK CDN -->
-<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-<script src="script.js?v=1.0.1"></script>
 </body>
 </html>
