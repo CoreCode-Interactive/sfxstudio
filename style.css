@@ -62,8 +62,11 @@ header {
     transition: transform 0.1s, background 0.2s;
 }
 
-.selected {
-    border-left: 6px solid green;
+.cue-box.selected {
+    border-left: 6px solid var(--success) !important;
+    background: #1a2f23; /* Dark green tint background */
+    box-shadow: 0 0 10px rgba(46, 204, 113, 0.3);
+    transform: scale(1.01);
 }
 
 .cue-box:hover { background: #2a2a2a; }
