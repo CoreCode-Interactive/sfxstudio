@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Docs — SFXStudio</title>
+    <link rel="icon" type="image/png" href="img/Favicon.png">
+    <style>
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            background-color: #000000;
+            color: #ffffff;
+            margin: 0;
+            display: flex;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+        }
+
+        /* Sidebar */
+        .sidebar {
+            width: 250px;
+            height: 100vh;
+            position: fixed;
+            top: 0;
+            left: 0;
+            border-right: 1px solid #222;
+            padding: 2.5rem 1.5rem;
+            box-sizing: border-box;
+        }
+
+        .sidebar h2 {
+            font-size: 0.8rem;
+            letter-spacing: 0.2em;
+            margin-bottom: 2rem;
+            text-transform: uppercase;
+            /* Blue Accent on Sidebar Title */
+            color: #3498db; 
+        }
+
+        .sidebar ul {
+            list-style: none;
+            padding: 0;
+        }
+
+        .sidebar li {
+            margin-bottom: 0.8rem;
+        }
+
+        .sidebar a {
+            color: #888;
+            text-decoration: none;
+            font-size: 0.9rem;
+            transition: all 0.2s ease;
+        }
+
+        /* Blue Accent on Hover */
+        .sidebar a:hover {
+            color: #3498db;
+            padding-left: 5px;
+        }
+
+        /* Content Area */
+        .content {
+            margin-left: 250px;
+            padding: 4rem 10%;
+            max-width: 900px;
+        }
+
+        section {
+            margin-bottom: 6rem;
+            scroll-margin-top: 4rem;
+        }
+
+        h1 {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+            font-weight: 800;
+        }
+
+        h3 {
+            font-size: 1.4rem;
+            margin-bottom: 1.5rem;
+            /* Subtle blue bottom border for sections */
+            border-bottom: 2px solid #3498db;
+            display: inline-block;
+            padding-bottom: 4px;
+        }
+
+        p {
+            color: #aaa;
+            line-height: 1.8;
+            font-size: 1.05rem;
+        }
+
+        /* Blue Accent for Code Blocks */
+        code {
+            background-color: rgba(52, 152, 219, 0.1);
+            color: #3498db;
+            padding: 0.2rem 0.4rem;
+            border-radius: 4px;
+            font-family: 'SFMono-Regular', Consolas, 'Liberation Mono', Menlo, monospace;
+            font-size: 0.9em;
+        }
+
+        /* Mobile View */
+        @media (max-width: 768px) {
+            body { flex-direction: column; }
+            .sidebar { 
+                width: 100%; 
+                height: auto; 
+                position: relative; 
+                border-right: none; 
+                border-bottom: 1px solid #222;
+            }
+            .content { margin-left: 0; padding: 2rem; }
+        }
+    </style>
+</head>
+<body>
+
+    <nav class="sidebar">
+        <h2>Docs</h2>
+        <ul>
+            <li><a href="#intro">Introduction</a></li>
+            <li><a href="#setup">Quick Setup</a></li>
+            <li><a href="#api">API Reference</a></li>
+            <li><a href="#faq">FAQ</a></li>
+        </ul>
+        <!-- Add this section inside your <nav class="sidebar"> tag, below the <ul> -->
+
+        <div class="sidebar-footer">
+            <a href="/">← home</a>
+            <a href="/dashboard">dashboard ↗</a>
+        </div>
+
+        <!-- Update your <style> section with these rules -->
+
+        <style>
+            /* ... existing styles ... */
+
+            .sidebar {
+                display: flex;
+                flex-direction: column; /* Allows the footer to be pushed to the bottom */
+            }
+
+            .sidebar ul {
+                flex-grow: 1; /* Pushes the footer down */
+            }
+
+            .sidebar-footer {
+                border-top: 1px solid #222;
+                padding-top: 1.5rem;
+                margin-top: 2rem;
+                display: flex;
+                flex-direction: column;
+                gap: 0.8rem;
+            }
+
+            .sidebar-footer a {
+                font-size: 0.8rem !important;
+                text-transform: uppercase;
+                letter-spacing: 0.1em;
+                color: #666 !important;
+                transition: color 0.2s ease;
+            }
+
+            .sidebar-footer a:hover {
+                color: #3498db !important;
+                padding-left: 0; /* Keeps global links stationary */
+            }
+
+            @media (max-width: 768px) {
+                .sidebar-footer {
+                    flex-direction: row;
+                    justify-content: space-around;
+                    padding-bottom: 1.5rem;
+                }
+            }
+        </style>        
+    </nav>
+
+    <main class="content">
+        <section id="intro">
+            <h1>Getting Started</h1>
+            <p>Welcome to the documentation. This layout uses <code>#3498db</code> to highlight key elements and navigation states while keeping the focus on your text.</p>
+        </section>
+
+        <section id="setup">
+            <h3>Quick Setup</h3>
+            <p>To begin, initialize the project with your favorite package manager:</p>
+            <p><code>npm install project-name</code></p>
+        </section>
+
+        <section id="api">
+            <h3>API Reference</h3>
+            <p>Explore the various endpoints available. All requests should be sent to the <code>/v1/</code> root directory with proper authentication headers.</p>
+        </section>
+
+        <section id="faq">
+            <h3>FAQ</h3>
+            <p>Need help? Check out our frequently asked questions or visit the GitHub repository for more details.</p>
+        </section>
+    </main>
+
+</body>
+</html>
