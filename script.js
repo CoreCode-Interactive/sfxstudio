@@ -1,4 +1,4 @@
-let supabase = null;
+let supabaseClient = null;
 let currentBucket = "cue-media";
 
 let projectorWindow = null;
@@ -16,7 +16,7 @@ function initBackend() {
 
     if (savedUrl && savedKey) {
         // Initialize the Supabase SDK using the user's specific credentials
-        supabase = supabase.createClient(savedUrl, savedKey);
+        supabaseClient = supabase.createClient(savedUrl, savedKey);
         currentBucket = savedBucket || "cue-media";
         
         if (configModal) configModal.style.display = 'none';
@@ -66,7 +66,7 @@ async function addCue() {
     const fileInput = document.getElementById('filePicker');
     
     if (fileInput.files.length === 0) return alert("Select a file first!");
-    if (!supabase) return alert("Connect your Supabase database first!");
+    if (!supabaseClient) return alert("Connect your Supabase database first!");
 
     const file = fileInput.files[0];
     const addBtn = document.querySelector('.btn-add');
@@ -80,14 +80,14 @@ async function addCue() {
         const fileName = `${Date.now()}.${fileExt}`;
 
         // 1. Upload raw binary file straight to user's bucket
-        const { error: uploadError } = await supabase.storage
+        const { error: uploadError } = await supabaseClient.storage
             .from(currentBucket)
             .upload(fileName, file);
 
         if (uploadError) throw uploadError;
 
         // 2. Extract public streamable tracking link
-        const { data: urlData } = supabase.storage
+        const { data: urlData } = supabaseClient.storage
             .from(currentBucket)
             .getPublicUrl(fileName);
 
