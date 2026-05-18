@@ -62,6 +62,10 @@ header {
     transition: transform 0.1s, background 0.2s;
 }
 
+.selected {
+    border-left: 6px solid green;
+}
+
 .cue-box:hover { background: #2a2a2a; }
 .cue-box:active { transform: scale(0.99); }
 .cue-box.needs-link { border-left-color: var(--warning); }
