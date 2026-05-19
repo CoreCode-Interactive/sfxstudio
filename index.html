@@ -125,10 +125,13 @@
                 padding-top: 80px;
             }
             .hero-image {
-                width: 100%;
-                height: 40vh;
-                border-right: none;
-                border-bottom: 1px solid #222;
+                flex: 1;
+                height: 100%;
+                background-image: url('img/preview.png');
+                background-size: cover;
+                background-position: left center; /* Modified: locks focal point to the left edge */
+                border-right: 1px solid #222;
+                filter: grayscale(20%);
             }
             .hero-content {
                 padding: 4rem 2rem;
