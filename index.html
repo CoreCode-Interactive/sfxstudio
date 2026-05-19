@@ -17,12 +17,12 @@
             overflow-x: hidden;
         }
 
-/* Navigation Bar */
+        /* Navigation Bar */
         nav {
             position: fixed;
             top: 0;
             width: 100%;
-            padding: 1.5rem 2rem; /* Added left/right padding for the logo */
+            padding: 1.5rem 2rem;
             display: flex;
             align-items: center;
             background: rgba(0, 0, 0, 0.8);
@@ -65,14 +65,13 @@
         .hero-image {
             flex: 1;
             height: 100%;
-            background-image: url('your-image.jpg'); /* Replace with your image */
+            background-image: url('img/preview.png');
             background-size: cover;
-            background-position: center;
+            background-position: left center;
             border-right: 1px solid #222;
-            filter: grayscale(20%); /* Optional: keeps it moody/minimal */
+            filter: grayscale(20%);
         }
-
-        /* Right Half: Content */
+        
         .hero-content {
             flex: 1;
             padding: 0 10%;
@@ -95,8 +94,7 @@
             margin-bottom: 2.5rem;
             max-width: 450px;
         }
-
-        /* Blue Accent Button */
+        
         .cta-button {
             display: inline-block;
             width: max-content;
@@ -125,33 +123,31 @@
                 padding-top: 80px;
             }
             .hero-image {
-                flex: 1;
-                height: 100%;
-                background-image: url('img/preview.png');
-                background-size: cover;
-                background-position: left center; /* Modified: locks focal point to the left edge */
-                border-right: 1px solid #222;
-                filter: grayscale(20%);
+                width: 100%;
+                height: 45vh;
+                border-right: none;
+                border-bottom: 1px solid #222;
             }
             .hero-content {
                 padding: 4rem 2rem;
                 text-align: center;
                 align-items: center;
             }
-            .hero-content h1 { font-size: 2.5rem; }
+            .hero-content h1 { 
+                font-size: 2.5rem; 
+            }
         }
     </style>
 </head>
 <body>
 
-<nav>
+    <nav>
         <div class="brand" style="display: flex; align-items: center; gap: 0;">
             <strong style="display: inline !important; color: #fefffe; margin: 0; padding: 0;">SF</strong>
             <strong style="display: inline !important; color: #7c61f6; margin: 0; padding: 0;">X</strong>
             <strong style="display: inline !important; color: #fefffe; margin: 0; padding: 0;">Studio</strong>
         </div>
         
-        <!-- Grouping links keeps them perfectly centered on the monitor screen -->
         <div class="nav-links">
             <a href="/sfxstudio/" class="active">home</a>
             <a href="/sfxstudio/dashboard">dashboard</a>
@@ -160,8 +156,7 @@
     </nav>
 
     <main>
-        <!-- Replace the background-image in CSS or the src here -->
-        <div class="hero-image" style="background-image: url('img/preview.png');"></div>
+        <div class="hero-image"></div>
 
         <div class="hero-content">
             <h1>SFX Studio.</h1>
