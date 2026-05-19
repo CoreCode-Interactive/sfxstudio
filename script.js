@@ -365,9 +365,6 @@ async function fetchSupabaseFiles() {
             video: ['mp4', 'webm', 'mov', 'mkv', 'avi', 'wmv']
         };
         const type = document.getElementById('typeInput').value.toLowerCase();
-        const shouldInclude = MEDIA_EXTENSIONS[type]?.includes(fileExt);
-
-        
         
         selectDropdown.innerHTML = '<option value="">-- Select a File --</option>'; // if there are options for media from backend
         data.forEach(file => {
