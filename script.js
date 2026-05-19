@@ -239,17 +239,27 @@ function renderCues() {
     cues.forEach((cue, index) => {
         const div = document.createElement('div');
         
-        // If this cue matches our tracked active index, visually select it
+        // 1. Set standard structural classes
         if (index === currentCueIndex) {
             div.className = "cue-box selected";
         } else {
             div.className = "cue-box";
         }
 
+        // 2. Make the cue box natively draggable
+        div.setAttribute('draggable', 'true');
+        div.setAttribute('data-index', index); // Track its original array layout position
+
+        // 3. Bind Drag and Drop Events
+        div.addEventListener('dragstart', handleDragStart);
+        div.addEventListener('dragover', handleDragOver);
+        div.addEventListener('drop', handleDrop);
+
+        // Regular click behavior for running the deck
         div.onclick = () => {
-            currentCueIndex = index; // Sync our tracker index to the clicked item
+            currentCueIndex = index; 
             fireCue(cue);
-            renderCues();            // Re-render immediately to update visual borders
+            renderCues();            
         };
 
         div.innerHTML = `
@@ -261,6 +271,56 @@ function renderCues() {
         `;
         container.appendChild(div);
     });
+}
+
+let draggedIndex = null; // Globally track which item the stage tech picked up
+
+function handleDragStart(e) {
+    // Save the array index of the item being dragged
+    draggedIndex = parseInt(this.getAttribute('data-index'));
+    
+    // Set a ghost image effect standard for browsers
+    e.dataTransfer.effectAllowed = 'move';
+    
+    // Add a quick visual utility class so the user knows they picked it up
+    this.classList.add('dragging');
+}
+
+function handleDragOver(e) {
+    // Crucial: Browsers block dropping by default. This overrides it.
+    if (e.preventDefault) {
+        e.preventDefault(); 
+    }
+    e.dataTransfer.dropEffect = 'move';
+    return false;
+}
+
+function handleDrop(e) {
+    e.stopPropagation(); // Stop the event from bubbling up
+    e.preventDefault();
+
+    // Get the index of the slot we dropped the item onto
+    const targetIndex = parseInt(this.getAttribute('data-index'));
+
+    // Don't do anything if they dropped it onto itself
+    if (draggedIndex === targetIndex) return;
+
+    // 1. Save the active cue being dragged so we don't lose it
+    const activeCueId = cues[currentCueIndex]?.id;
+
+    // 2. Splice & Move logic: Cut out the dragged item
+    const [movedCue] = cues.splice(draggedIndex, 1);
+    
+    // 3. Insert the item back into its brand new target position
+    cues.splice(targetIndex, 0, movedCue);
+
+    // 4. Important: Re-align our selected track highlighter index
+    if (activeCueId !== undefined) {
+        currentCueIndex = cues.findIndex(c => c.id === activeCueId);
+    }
+
+    // 5. Instantly redraw the layout grid to reflect the new order
+    renderCues();
 }
 
 function removeCue(e, id) {
