@@ -286,6 +286,7 @@ function updateFileFilters() {
     if (type === 'image') picker.accept = "image/*";
     else if (type === 'video') picker.accept = "video/*";
     else if (type === 'audio') picker.accept = "audio/*";
+    fetchSupabaseFiles();
 }
 
 function saveShow() {
