@@ -359,16 +359,34 @@ async function fetchSupabaseFiles() {
             return;
         }
 
-        selectDropdown.innerHTML = '<option value="">-- Select a File --</option>';
+        const MEDIA_EXTENSIONS = {
+            image: ['jpg', 'jpeg', 'png', 'gif', 'webp', 'svg', 'bmp', 'tiff'],
+            audio: ['mp3', 'wav', 'ogg', 'm4a', 'flac', 'aac', 'aiff'],
+            video: ['mp4', 'webm', 'mov', 'mkv', 'avi', 'wmv']
+        };
+        const type = document.getElementById('typeInput').value.toLowerCase();
+        const shouldInclude = MEDIA_EXTENSIONS[type]?.includes(fileExt);
+
+        
+        
+        selectDropdown.innerHTML = '<option value="">-- Select a File --</option>'; // if there are options for media from backend
         data.forEach(file => {
             if (file.name !== '.emptyFolderPlaceholder') {
-                const option = document.createElement('option');
-                option.value = file.name;
-                option.textContent = file.name;
-                selectDropdown.appendChild(option);
+                const fileExt = file.name.split('.').pop().toLowerCase();
+                const shouldInclude = MEDIA_EXTENSIONS[type]?.includes(fileExt);
+                if(shouldInclude)
+                {
+                    const option = document.createElement('option');
+                    option.value = file.name;
+                    option.textContent = file.name;
+                    selectDropdown.appendChild(option);
+                }
             }
         });
 
+      if (selectDropdown.options.length <= 1) {
+        selectDropdown.innerHTML = `<option value="">No ${type} files found in bucket</option>`;
+      }
     } catch (error) {
         console.error('Error fetching from Supabase:', error);
         selectDropdown.innerHTML = '<option value="">Error loading files</option>';
