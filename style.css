@@ -219,6 +219,16 @@ button {
     padding-top: 12px;
 }
 
+.cue-box[draggable="true"] {
+    cursor: grab;
+    user-select: none;
+}
+
+.cue-box.dragging {
+    opacity: 0.4;
+    border: 2px dashed #ff9800; /* Distinct border style while moving */
+}
+
 .btn-disconnect {
     background: #333;
     color: #ccc;
